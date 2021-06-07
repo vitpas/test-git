@@ -18,7 +18,17 @@
               return response.text();
             }
           }
-          Promise.all([coffee, tea, description]).then(values => {
+          
+        })
+        .catch(e => {
+          console.log(`There has been a problem with your fetch operation for resource "${url}": ` + e.message);
+        });
+      }
+      let coffee = fetchAndDecode('coffee.jpg', 'blob');
+      let tea = fetchAndDecode('tea.jpg', 'blob');
+      let description = fetchAndDecode('description.txt', 'text');
+
+      Promise.all([coffee, tea, description]).then(values => {
             console.log(values);
             // Store each value returned from the promises in separate variables; create object URLs from the blobs
             let objectURL1 = URL.createObjectURL(values[0]);
@@ -37,15 +47,7 @@
             let para = document.createElement('p');
             para.textContent = descText;
             document.body.appendChild(para);
-          });
-        })
-        .catch(e => {
-          console.log(`There has been a problem with your fetch operation for resource "${url}": ` + e.message);
-        });
-      }
-      let coffee = fetchAndDecode('coffee.jpg', 'blob');
-      let tea = fetchAndDecode('tea.jpg', 'blob');
-      let description = fetchAndDecode('description.txt', 'text');
+      });
     </script>
   </body>
 </html>
